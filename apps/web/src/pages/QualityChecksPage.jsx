@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Search, Cog, Zap, Flame, Shield, CheckCircle, Award } from 'lucide-react';
@@ -7,6 +7,15 @@ import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 
 const QualityChecksPage = () => {
+  const slideshowImages = [
+    '/first-step.png',
+    '/second-step.png',
+    '/third-step.png',
+    '/fourth-step.png',
+    '/fifth-step.png'
+  ];
+  const [activeSlide, setActiveSlide] = useState(0);
+
   const qualityStages = [
     {
       icon: <Search className="w-16 h-16" />,
@@ -46,6 +55,14 @@ const QualityChecksPage = () => {
     }
   ];
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % slideshowImages.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [slideshowImages.length]);
+
   return (
     <>
       <Helmet>
@@ -69,14 +86,9 @@ const QualityChecksPage = () => {
 
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden mt-20">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1682561477064-44fb2dfd82bf"
-            alt="JIANSH Quality Testing Laboratory"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-[#FF3333]/40" />
-        </div>
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#0d0d0f] via-[#141418] to-[#2a2a30]" />
+        <div className="absolute inset-0 z-0 bg-[radial-gradient(80%_70%_at_80%_20%,rgba(255,51,51,0.22)_0%,rgba(255,51,51,0)_70%)]" />
+        <div className="absolute inset-0 z-0 pattern-dots opacity-20" />
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -158,58 +170,43 @@ const QualityChecksPage = () => {
         </div>
       </section>
 
-      {/* Testing Laboratory */}
-      <section className="section-padding bg-black text-white">
+      {/* Process Slideshow */}
+      <section className="py-6 md:py-8 bg-gray-50 pattern-grid">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-white mb-6">
-                State-of-the-Art <span className="text-[#FF3333]">Testing Facility</span>
-              </h2>
-              <div className="space-y-4 text-gray-300 leading-relaxed">
-                <p>
-                  Our advanced testing laboratory is equipped with the latest diagnostic equipment and testing apparatus. We invest continuously in technology to ensure our quality control processes remain at the forefront of the industry.
-                </p>
-                <p>
-                  Every test is conducted by trained technicians following strict protocols. Data from each testing stage is recorded and analyzed to maintain our commitment to continuous improvement and quality excellence.
-                </p>
-                <p>
-                  Our testing procedures exceed industry standards, incorporating both international quality benchmarks and our own rigorous internal specifications. This dual-layer approach ensures that JIANSH spark plugs consistently outperform expectations.
-                </p>
-              </div>
+          <div className="max-w-[520px] sm:max-w-[620px] md:max-w-[700px] mx-auto">
+            <div className="overflow-hidden bg-white shadow-sm">
+              <motion.div
+                className="flex"
+                animate={{ x: `-${activeSlide * 100}%` }}
+                transition={{ duration: 0.6, ease: 'easeInOut' }}
+              >
+                {slideshowImages.map((image, index) => (
+                  <div key={image} className="w-full flex-shrink-0">
+                    <div className="w-full aspect-square bg-[#111]">
+                      <img
+                        src={image}
+                        alt={`Quality step ${index + 1}`}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
 
-              <div className="grid grid-cols-2 gap-6 mt-8">
-                <div className="bg-white/5 backdrop-blur-sm p-6 border-l-4 border-[#FF3333]">
-                  <div className="text-4xl font-bold text-[#FF3333] mb-2">100%</div>
-                  <div className="text-sm text-gray-400 uppercase tracking-wide">Products Tested</div>
-                </div>
-                <div className="bg-white/5 backdrop-blur-sm p-6 border-l-4 border-[#FF3333]">
-                  <div className="text-4xl font-bold text-[#FF3333] mb-2">6</div>
-                  <div className="text-sm text-gray-400 uppercase tracking-wide">Quality Stages</div>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative"
-            >
-              <div className="industrial-shadow-lg">
-                <img
-                  src="https://images.unsplash.com/photo-1682561477064-44fb2dfd82bf"
-                  alt="JIANSH Advanced Testing Laboratory"
-                  className="w-full h-auto"
+            <div className="flex items-center justify-center gap-2 mt-5">
+              {slideshowImages.map((image, index) => (
+                <button
+                  key={`${image}-dot`}
+                  type="button"
+                  onClick={() => setActiveSlide(index)}
+                  aria-label={`Go to slide ${index + 1}`}
+                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                    activeSlide === index ? 'w-8 bg-[#FF3333]' : 'w-2.5 bg-black/25 hover:bg-black/45'
+                  }`}
                 />
-              </div>
-            </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -274,26 +271,6 @@ const QualityChecksPage = () => {
                 </p>
               </motion.div>
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section className="section-padding bg-gradient-to-br from-[#FF3333] to-[#CC0000] text-white">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto text-center"
-          >
-            <h2 className="text-white mb-6">
-              Experience the JIANSH Difference
-            </h2>
-            <p className="text-xl text-white/90 leading-relaxed mb-8">
-              Our rigorous quality assurance process ensures that every JIANSH spark plug delivers the performance, reliability, and durability you demand. Trust in quality. Trust in JIANSH.
-            </p>
           </motion.div>
         </div>
       </section>

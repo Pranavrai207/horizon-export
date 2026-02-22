@@ -41,20 +41,6 @@ const HomePage = () => {
     ]
   };
 
-  const fadeInUp = {
-    initial: { opacity: 0, y: 60 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
-  };
-
-  const staggerContainer = {
-    animate: {
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
   const products = [
     {
       image: '/premium-quality-card.png',
@@ -102,41 +88,29 @@ const HomePage = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/hero-bg.png"
-            alt="JIANSH Premium Spark Plug"
-            className="w-full h-full object-cover [filter:brightness(0.82)_contrast(1.12)_saturate(1.08)]"
-          />
-          <div className="absolute inset-0 bg-[radial-gradient(70%_70%_at_50%_55%,rgba(20,20,20,0.22)_0%,rgba(20,20,20,0.14)_38%,rgba(20,20,20,0.08)_58%,rgba(20,20,20,0)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0)_16%,rgba(0,0,0,0)_84%,rgba(0,0,0,0.12)_100%)]" />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/55 to-[#FF3333]/45 backdrop-blur-[1px]" />
-          <div className="absolute inset-0 pattern-dots opacity-20" />
+      <section className="relative mt-20 h-[76vw] sm:h-[68vh] md:h-[78vh] lg:h-[calc(100vh-5rem)] overflow-hidden bg-gradient-to-b from-[#1f1f1f] to-black">
+        <div className="absolute bottom-0 inset-x-0 z-30 px-0 sm:bottom-6 md:bottom-8 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:px-4">
+          <Link to="/contact" className="inline-flex w-full sm:w-auto items-center justify-center space-x-2 bg-[#FF3333] text-white px-5 py-2 md:px-6 md:py-2.5 text-sm md:text-base font-bold uppercase tracking-wider transition-all duration-300 hover:bg-[#CC0000] hover:shadow-2xl hover:scale-105 active:scale-95">
+            <span>Send Inquiry</span>
+            <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+          </Link>
         </div>
 
-        {/* Hero Content */}
-        <motion.div
-          initial="initial"
-          animate="animate"
-          variants={staggerContainer}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 text-center px-6 w-full max-w-4xl"
-        >
-          <motion.p
-            variants={fadeInUp}
-            className="text-lg md:text-xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed"
-          >
-            Engineered with precision, tested for excellence. Experience unmatched reliability and performance with JIANSH.
-          </motion.p>
-
-          <motion.div variants={fadeInUp}>
-            <Link to="/contact" className="btn-primary inline-flex items-center space-x-2">
-              <span>Send Inquiry</span>
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </motion.div>
-        </motion.div>
+        {/* Hero image */}
+        <div className="absolute inset-0 z-0 pb-8 sm:pb-0">
+          <img
+            src="/home.png"
+            alt=""
+            aria-hidden="true"
+            className="hidden lg:block absolute inset-0 w-full h-full object-cover object-center [filter:brightness(0.6)_contrast(1.04)_saturate(1.02)]"
+          />
+          <img
+            src="/home.png"
+            alt="JIANSH Spark Plugs Hero"
+            className="relative z-10 w-full h-full object-contain object-center [filter:brightness(0.9)_contrast(1.02)_saturate(1.02)]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
+        </div>
       </section>
 
       {/* Company Introduction */}
@@ -215,12 +189,13 @@ const HomePage = () => {
         <div className="absolute inset-0 pattern-dots opacity-10" />
         
         <div className="container-custom relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
+              className="max-w-4xl mx-auto text-center"
             >
               <h2 className="text-white mb-6">
                 Uncompromising <span className="text-[#FF3333]">Quality Standards</span>
@@ -229,7 +204,7 @@ const HomePage = () => {
                 Every JIANSH spark plug undergoes rigorous testing through our comprehensive 6-stage quality assurance process. We ensure that each product meets international standards and exceeds customer expectations.
               </p>
               
-              <div className="space-y-4 mb-8">
+              <div className="space-y-4 mb-8 max-w-2xl mx-auto text-left">
                 {qualityFeatures.map((feature, index) => (
                   <motion.div
                     key={index}
@@ -245,27 +220,15 @@ const HomePage = () => {
                 ))}
               </div>
 
-              <Link to="/quality-checks" className="btn-primary inline-flex items-center space-x-2">
-                <span>View Quality Process</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative"
-            >
-              <div className="industrial-shadow-lg">
-                <img
-                  src="https://horizons-cdn.hostinger.com/38727cf0-565e-4ae8-b59b-37f2b9952d98/4d6e21b485d448b1e5995e888266a397.png"
-                  alt="JIANSH Quality Testing Process"
-                  className="w-full h-auto"
-                />
+              <div className="flex justify-center">
+                <Link to="/quality-checks" className="btn-primary inline-flex items-center space-x-2">
+                  <span>View Quality Process</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
               </div>
             </motion.div>
+
+
           </div>
         </div>
       </section>
@@ -288,17 +251,17 @@ const HomePage = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0 }}
-              className="card-industrial text-center group"
+              className="card-industrial text-center group !px-3 !py-3 md:!px-4 md:!py-4"
             >
-              <Phone className="w-12 h-12 text-[#FF3333] mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
-              <h4 className="text-black mb-2">Phone</h4>
-              <a href="tel:8595010027" className="text-gray-600 hover:text-[#FF3333] transition-colors duration-300">
+              <Phone className="w-6 h-6 text-[#FF3333] mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+              <h4 className="text-black mb-0.5 text-base md:text-lg leading-tight">Phone</h4>
+              <a href="tel:8595010027" className="text-gray-600 hover:text-[#FF3333] transition-colors duration-300 text-sm leading-tight">
                 8595010027
               </a>
             </motion.div>
@@ -308,11 +271,11 @@ const HomePage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="card-industrial text-center group"
+              className="card-industrial text-center group !px-3 !py-3 md:!px-4 md:!py-4"
             >
-              <Mail className="w-12 h-12 text-[#FF3333] mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
-              <h4 className="text-black mb-2">Email</h4>
-              <a href="mailto:jianshsparkplug@gmail.com" className="text-gray-600 hover:text-[#FF3333] transition-colors duration-300 break-all text-sm">
+              <Mail className="w-6 h-6 text-[#FF3333] mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+              <h4 className="text-black mb-0.5 text-base md:text-lg leading-tight">Email</h4>
+              <a href="mailto:jianshsparkplug@gmail.com" className="text-gray-600 hover:text-[#FF3333] transition-colors duration-300 break-all text-sm leading-tight">
                 jianshsparkplug@gmail.com
               </a>
             </motion.div>
@@ -322,11 +285,11 @@ const HomePage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="card-industrial text-center group"
+              className="card-industrial text-center group !px-3 !py-3 md:!px-4 md:!py-4"
             >
-              <Globe className="w-12 h-12 text-[#FF3333] mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
-              <h4 className="text-black mb-2">Website</h4>
-              <p className="text-gray-600">www.jianshsparkplugs.com</p>
+              <Globe className="w-6 h-6 text-[#FF3333] mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+              <h4 className="text-black mb-0.5 text-base md:text-lg leading-tight">Website</h4>
+              <p className="text-gray-600 text-sm leading-tight">www.jianshsparkplugs.com</p>
             </motion.div>
 
             <motion.div
@@ -334,16 +297,13 @@ const HomePage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="card-industrial text-center group"
+              className="card-industrial text-center group !px-3 !py-3 md:!px-4 md:!py-4"
             >
-              <MapPin className="w-12 h-12 text-[#FF3333] mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
-              <h4 className="text-black mb-2">Location</h4>
-              <p className="text-gray-600">
-                S-24, Balram Nagar<br />
-                Loni Industrial Area<br />
-                Loni Estate, Ghaziabad<br />
-                Uttar Pradesh 201102<br />
-                India
+              <MapPin className="w-6 h-6 text-[#FF3333] mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+              <h4 className="text-black mb-0.5 text-base md:text-lg leading-tight">Location</h4>
+              <p className="text-gray-600 text-sm leading-snug inline-block text-left">
+                S-24, Balram Nagar, Loni Industrial Area, Loni Estate, Ghaziabad<br />
+                Uttar Pradesh 201102, India
               </p>
             </motion.div>
           </div>
@@ -369,3 +329,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+

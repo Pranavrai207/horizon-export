@@ -2,7 +2,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { Target, Award, Factory, TrendingUp, Shield, Users } from 'lucide-react';
+import { Target, Award, TrendingUp, Shield, Users } from 'lucide-react';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 
@@ -59,14 +59,9 @@ const AboutPage = () => {
 
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden mt-20">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1589320011103-48e428abcbae"
-            alt="JIANSH Manufacturing Facility"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-[#FF3333]/40" />
-        </div>
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#0d0d0f] via-[#141418] to-[#2a2a30]" />
+        <div className="absolute inset-0 z-0 bg-[radial-gradient(80%_70%_at_80%_20%,rgba(255,51,51,0.22)_0%,rgba(255,51,51,0)_70%)]" />
+        <div className="absolute inset-0 z-0 pattern-dots opacity-20" />
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -118,15 +113,10 @@ const AboutPage = () => {
             >
               <div className="industrial-shadow-lg">
                 <img
-                  src="https://images.unsplash.com/photo-1589320011103-48e428abcbae"
+                  src="/our-story.png"
                   alt="JIANSH Manufacturing Excellence"
                   className="w-full h-auto"
                 />
-              </div>
-              <div className="absolute -bottom-6 -right-6 bg-[#FF3333] text-white p-8 max-w-xs industrial-shadow-lg">
-                <Factory className="w-12 h-12 mb-3" />
-                <p className="font-bold text-2xl mb-2">State-of-the-Art</p>
-                <p className="text-sm">Manufacturing Facility</p>
               </div>
             </motion.div>
           </div>
@@ -205,70 +195,6 @@ const AboutPage = () => {
                 </p>
               </motion.div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Manufacturing Standards */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="order-2 lg:order-1"
-            >
-              <div className="industrial-shadow-lg">
-                <img
-                  src="/about.png"
-                  alt="JIANSH Quality Manufacturing Standards"
-                  className="w-full h-auto"
-                />
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="order-1 lg:order-2"
-            >
-              <h2 className="text-black mb-6">
-                World-Class <span className="text-gradient">Manufacturing</span>
-              </h2>
-              <div className="space-y-6">
-                <div className="border-l-4 border-[#FF3333] pl-6">
-                  <h4 className="text-black mb-2">Precision-Controlled Processes</h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    Our manufacturing processes follow strict internal quality controls, ensuring consistency and reliability in every product we produce.
-                  </p>
-                </div>
-
-                <div className="border-l-4 border-[#FF3333] pl-6">
-                  <h4 className="text-black mb-2">Advanced Technology</h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    We utilize cutting-edge machinery and precision tools to manufacture spark plugs with tolerances measured in microns.
-                  </p>
-                </div>
-
-                <div className="border-l-4 border-[#FF3333] pl-6">
-                  <h4 className="text-black mb-2">Premium Materials</h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    Only the finest raw materials are selected for our spark plugs, ensuring superior conductivity, heat resistance, and longevity.
-                  </p>
-                </div>
-
-                <div className="border-l-4 border-[#FF3333] pl-6">
-                  <h4 className="text-black mb-2">Skilled Workforce</h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    Our team of experienced engineers and technicians brings decades of combined expertise to every stage of production.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
           </div>
         </div>
       </section>

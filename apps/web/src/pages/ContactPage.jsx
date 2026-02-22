@@ -1,88 +1,12 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, Send, CheckCircle } from 'lucide-react';
+import { Phone, Mail, MapPin } from 'lucide-react';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
-import { useToast } from '@/components/ui/use-toast';
 
 const ContactPage = () => {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    // Basic validation
-    if (!formData.name || !formData.phone || !formData.email || !formData.message) {
-      toast({
-        title: "Validation Error",
-        description: "Please fill in all required fields.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      toast({
-        title: "Invalid Email",
-        description: "Please enter a valid email address.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    setTimeout(() => {
-      // Store in localStorage
-      const submissions = JSON.parse(localStorage.getItem('jiansh_inquiries') || '[]');
-      submissions.push({
-        ...formData,
-        timestamp: new Date().toISOString()
-      });
-      localStorage.setItem('jiansh_inquiries', JSON.stringify(submissions));
-
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-
-      toast({
-        title: "Message Sent Successfully!",
-        description: "Thank you for contacting JIANSH. We'll get back to you soon.",
-      });
-
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setFormData({
-          name: '',
-          phone: '',
-          email: '',
-          message: ''
-        });
-        setIsSubmitted(false);
-      }, 3000);
-    }, 1500);
-  };
-
   return (
     <>
       <Helmet>
@@ -124,122 +48,46 @@ const ContactPage = () => {
         </motion.div>
       </section>
 
-      {/* Contact Form & Info */}
+      {/* Contact Info */}
       <section className="py-16 md:py-20 px-4 md:px-6 lg:px-12 bg-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
-            {/* Contact Form */}
+          <div className="grid grid-cols-1 gap-8 md:gap-12">
             <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="w-full"
+              className="space-y-6 md:space-y-8 w-full max-w-4xl mx-auto"
             >
-              <h2 className="text-black mb-4 md:mb-6 text-3xl md:text-4xl">
-                Send Us a <span className="text-gradient">Message</span>
-              </h2>
-              <p className="text-gray-600 mb-6 md:mb-8 leading-relaxed text-sm md:text-base">
-                Have questions about our products or need technical assistance? Fill out the form below and our team will get back to you as soon as possible.
-              </p>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 md:gap-8 items-center">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="input-industrial"
-                    placeholder="Enter your full name"
+                  <h2 className="text-black mb-2 text-3xl md:text-4xl">
+                    Send Us a <span className="text-[#FF3333]">Message</span>
+                  </h2>
+                  <p className="text-gray-600 leading-relaxed text-base md:text-lg">
+                    Have questions about our products or need technical assistance?
+                  </p>
+                  <a
+                    href="https://wa.me/918384093072"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-2.5 text-[#25D366] hover:text-[#1DA851] transition-colors duration-300 font-bold text-xl md:text-2xl"
+                  >
+                    <svg viewBox="0 0 32 32" className="w-6 h-6 md:w-7 md:h-7" aria-hidden="true" focusable="false">
+                      <path fill="currentColor" d="M19.11 17.17c-.27-.14-1.58-.78-1.82-.87-.24-.09-.42-.14-.6.14-.18.27-.69.87-.85 1.04-.15.18-.31.2-.58.07-.27-.14-1.13-.42-2.15-1.33-.79-.71-1.33-1.58-1.49-1.84-.15-.27-.02-.42.11-.56.12-.12.27-.31.4-.47.13-.16.18-.27.27-.45.09-.18.04-.34-.02-.47-.07-.14-.6-1.44-.82-1.98-.21-.51-.43-.44-.6-.45h-.51c-.18 0-.47.07-.71.34-.24.27-.93.91-.93 2.22 0 1.31.95 2.57 1.08 2.75.14.18 1.86 2.84 4.5 3.98.63.27 1.12.44 1.5.56.63.2 1.2.17 1.65.1.5-.07 1.58-.65 1.8-1.28.22-.63.22-1.17.15-1.28-.06-.12-.24-.18-.5-.31zM16 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.26.59 4.47 1.71 6.4L3.2 28.8l6.57-1.68c1.86 1.01 3.96 1.54 6.23 1.55h.01c7.06 0 12.79-5.74 12.79-12.8 0-3.42-1.33-6.63-3.75-9.05A12.7 12.7 0 0 0 16 3.2zm0 23.3h-.01a10.45 10.45 0 0 1-5.32-1.45l-.38-.22-3.9 1 1.04-3.8-.24-.39a10.5 10.5 0 1 1 8.8 4.86z" />
+                    </svg>
+                    <span>Enquire on WhatsApp</span>
+                  </a>
+                </div>
+                <div className="justify-self-start md:justify-self-end mt-4 md:mt-8">
+                  <img
+                    src="/whatsapp-qr.png"
+                    alt="Scan to enquire on WhatsApp"
+                    className="w-48 h-48 md:w-64 md:h-64 object-contain"
                   />
                 </div>
+              </div>
 
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">
-                    Phone Number *
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className="input-industrial"
-                    placeholder="Enter your phone number"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="input-industrial"
-                    placeholder="Enter your email address"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="message" className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">
-                    Message *
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows="6"
-                    className="input-industrial resize-none"
-                    placeholder="Tell us about your inquiry..."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting || isSubmitted}
-                  className={`w-full btn-primary flex items-center justify-center space-x-2 ${
-                    isSubmitting || isSubmitted ? 'opacity-70 cursor-not-allowed' : ''
-                  }`}
-                >
-                  {isSubmitted ? (
-                    <>
-                      <CheckCircle className="w-5 h-5" />
-                      <span>Message Sent!</span>
-                    </>
-                  ) : isSubmitting ? (
-                    <span>Sending...</span>
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5" />
-                      <span>Send Message</span>
-                    </>
-                  )}
-                </button>
-              </form>
-            </motion.div>
-
-            {/* Contact Information */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="space-y-6 md:space-y-8 w-full"
-            >
               <div>
                 <h2 className="text-black mb-4 md:mb-6 text-3xl md:text-4xl">
                   Get in <span className="text-gradient">Touch</span>
@@ -249,50 +97,47 @@ const ContactPage = () => {
                 </p>
               </div>
 
-              <div className="space-y-4 md:space-y-6">
-                <div className="card-industrial group">
-                  <div className="flex items-start space-x-4">
-                    <Phone className="w-8 h-8 text-[#FF3333] flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
+              <div className="space-y-2">
+                <div className="card-industrial group !px-3 !py-3 md:!px-4 md:!py-4">
+                  <div className="flex items-start space-x-2.5">
+                    <Phone className="w-4 h-4 text-[#FF3333] flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                     <div>
-                      <h4 className="text-black mb-2">Phone</h4>
+                      <h4 className="text-black mb-0.5 text-base md:text-lg leading-tight">Phone</h4>
                       <a
                         href="tel:8595010027"
-                        className="text-gray-600 hover:text-[#FF3333] transition-colors duration-300 text-lg font-medium"
+                        className="text-gray-600 hover:text-[#FF3333] transition-colors duration-300 text-sm font-medium leading-tight"
                       >
                         8595010027
                       </a>
-                      <p className="text-sm text-gray-500 mt-1">Mon - Sat: 9:00 AM - 6:00 PM</p>
+                      <p className="text-xs text-gray-500 mt-0.5 leading-snug">Mon - Sat: 9:00 AM - 6:00 PM</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="card-industrial group">
-                  <div className="flex items-start space-x-4">
-                    <Mail className="w-8 h-8 text-[#FF3333] flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                <div className="card-industrial group !px-3 !py-3 md:!px-4 md:!py-4">
+                  <div className="flex items-start space-x-2.5">
+                    <Mail className="w-4 h-4 text-[#FF3333] flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                     <div>
-                      <h4 className="text-black mb-2">Email</h4>
+                      <h4 className="text-black mb-0.5 text-base md:text-lg leading-tight">Email</h4>
                       <a
                         href="mailto:jianshsparkplug@gmail.com"
-                        className="text-gray-600 hover:text-[#FF3333] transition-colors duration-300 font-medium break-all"
+                        className="text-gray-600 hover:text-[#FF3333] transition-colors duration-300 font-medium break-all text-sm leading-tight"
                       >
                         jianshsparkplug@gmail.com
                       </a>
-                      <p className="text-sm text-gray-500 mt-1">We'll respond within 24 hours</p>
+                      <p className="text-xs text-gray-500 mt-0.5 leading-snug">We'll respond within 24 hours</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="card-industrial group">
-                  <div className="flex items-start space-x-4">
-                    <MapPin className="w-8 h-8 text-[#FF3333] flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                <div className="card-industrial group !px-3 !py-3 md:!px-4 md:!py-4">
+                  <div className="flex items-start space-x-2.5">
+                    <MapPin className="w-4 h-4 text-[#FF3333] flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                     <div>
-                      <h4 className="text-black mb-2">Business Address</h4>
-                      <p className="text-gray-600 font-medium">
-                        S-24, Balram Nagar<br />
-                        Loni Industrial Area<br />
-                        Loni Estate, Ghaziabad<br />
-                        Uttar Pradesh 201102<br />
-                        India
+                      <h4 className="text-black mb-0.5 text-base md:text-lg leading-tight">Business Address</h4>
+                      <p className="text-gray-600 font-medium text-sm leading-snug">
+                        S-24, Balram Nagar, Loni Industrial Area, Loni Estate, Ghaziabad<br />
+                        Uttar Pradesh 201102, India
                       </p>
                     </div>
                   </div>
